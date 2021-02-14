@@ -34,7 +34,7 @@ body {
 }
 
 .container {
-    width: min(90vw, 500px);
+    width: min(90vw, 600px);
     margin: auto;
 }
 
@@ -141,7 +141,7 @@ header {
 }
 
 .card p {
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 3rem;
 
     margin-top: 1rem;
