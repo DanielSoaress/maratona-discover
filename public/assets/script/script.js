@@ -1,15 +1,21 @@
 const Modal = {
     open() {
+        document.querySelector('.modal-overlay').classList.remove('hidden')
         document.querySelector('.modal-overlay').classList.add('active')
     },
     close() {
         document.querySelector('.modal-overlay').classList.remove('active')
+        document.querySelector('.modal-overlay').classList.add('hidden')
     }
 }
 
 const Storage = {
     get() {
-        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
+        try {
+            return JSON.parse(localStorage.getItem("dev.finances:transactions"))
+        } catch (error) {
+            return []
+        }
     },
     set(transactions) {
         localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
@@ -70,6 +76,16 @@ const DOM = {
         return html
     },
     updateBalance() {
+        const transform = [
+            { transform: 'rotateX(0deg)' },
+            { transform: 'rotateX(360deg)' }
+        ]
+        const duration = {
+            duration: 1000,
+        }
+        document.getElementById('incomeDisplay').animate(transform, duration)
+        document.getElementById('expenseDisplay').animate(transform, duration)
+        document.getElementById('totalDisplay').animate(transform, duration)
         document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes())
         document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
         document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
@@ -94,7 +110,7 @@ const Utils = {
     },
     formatAmount(value) {
         value = Number(value) * 100
-        return value
+        return Math.round(value)
     },
     formatDate(value) {
         const splittedDate = value.split('-')

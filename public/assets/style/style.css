@@ -243,11 +243,59 @@ td.expense {
     width: 200;
     width: 90%;
     max-width: 500px;
+    border-radius: 10px;
 
     position: relative;
     z-index: 2;
 }
 
+/*-------Animation-------- */
+
+.modal-overlay.active .modal {
+    animation: pulse 1s;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.25s, opacity 0.25s linear;
+}
+
+#incomeDisplay {
+    animation: rotate 1s;
+}
+
+#expenseDisplay {
+    animation: rotate 1s;
+}
+
+#totalDisplay {
+    animation: rotate 1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+    }
+    25% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    75% {
+        transform: scale(1);
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+        transform: rotateX(0deg);
+    }
+    100% {
+        transform: rotateX(360deg);
+    }
+  }  
 /*-------FOOTER-------- */
 footer {
     text-align: center;
