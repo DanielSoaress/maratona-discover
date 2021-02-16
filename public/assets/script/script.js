@@ -12,7 +12,7 @@ const Modal = {
 const Storage = {
     get() {
         try {
-            return JSON.parse(localStorage.getItem("dev.finances:transactions"))
+            return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
         } catch (error) {
             return []
         }
@@ -75,20 +75,19 @@ const DOM = {
         `
         return html
     },
+   
     updateBalance() {
-        const transform = [
-            { transform: 'rotateX(0deg)' },
-            { transform: 'rotateX(360deg)' }
-        ]
-        const duration = {
-            duration: 1000,
-        }
-        document.getElementById('incomeDisplay').animate(transform, duration)
-        document.getElementById('expenseDisplay').animate(transform, duration)
-        document.getElementById('totalDisplay').animate(transform, duration)
+        Utils.animationDisplay('incomeDisplay', 0, 180)
+        Utils.animationDisplay('expenseDisplay', 0, 180)
+        Utils.animationDisplay('totalDisplay', 0, 180)
+
         document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes())
         document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
         document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
+
+        Utils.animationDisplay('incomeDisplay', 180, 360)
+        Utils.animationDisplay('expenseDisplay', 180, 360)
+        Utils.animationDisplay('totalDisplay', 180, 360)
     },
     clearTransaction() {
         DOM.transactionsContainer.innerHTML = "";
@@ -115,7 +114,17 @@ const Utils = {
     formatDate(value) {
         const splittedDate = value.split('-')
         return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
-    }
+    },
+    animationDisplay(id, to, from){
+        const transform = [
+            { transform: `rotateX(${to}deg)` },
+            { transform: `rotateX(${from}deg)` }
+        ]
+        const duration = {
+            duration: 500,
+        }
+        document.getElementById(id).animate(transform, duration)
+    },
 }
 
 const Form = {
